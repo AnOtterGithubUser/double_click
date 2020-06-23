@@ -47,7 +47,9 @@ class CommandWithConfig(Command):
                 config_params = {}
                 line = config.readline()
                 while line:
-                    config_params[re.split(',:', line)[0]] = re.split(',:', line)[1]
+                    if line[-1:] == '\n':
+                        line = line[:-1]
+                    config_params[line.split(': ')[0]] = line.split(': ')[1]
                     line = config.readline()
             elif config_file_extension == '.json':
                 config_params = json.load(config)
