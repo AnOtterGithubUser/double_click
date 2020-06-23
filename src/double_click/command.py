@@ -25,9 +25,11 @@ class CommandWithConfig(Command):
         elif ctx_param_type.name == 'choice':
             item_type = type(ctx_param_type.choices[0])
             param_type = item_type
-        elif ctx_param_type == 'integer':
+        elif ctx_param_type.name == 'integer':
             param_type = int
-        elif ctx_param_type == 'path':
+        elif ctx_param_type.name == 'text':
+            param_type = str
+        elif ctx_param_type.name == 'path':
             if ctx_param_type.exists:
                 if not os.path.isfile(config_param_value):
                     raise ValueError('The path specified in config %s does not exist' % config_param_value)
@@ -53,7 +55,7 @@ class CommandWithConfig(Command):
             elif config_file_extension == '.json':
                 config_params = json.load(config)
             elif config_file_extension == '.yml' or config_file_extension == '.yaml':
-                config_params = yaml.load(config)
+                config_params = yaml.load(config, Loader=yaml.FullLoader)
             else:
                 raise ValueError("Config file extension is not recognized in click extra")
         return config_params
