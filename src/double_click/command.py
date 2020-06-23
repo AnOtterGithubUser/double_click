@@ -2,7 +2,6 @@ from click.core import Command
 import os
 import json
 import yaml
-import re
 
 
 class CommandWithConfig(Command):
@@ -15,13 +14,10 @@ class CommandWithConfig(Command):
         config_params = self._parse_config()
         for param_index, (param_name, param_value) in enumerate(ctx.params.items()):
             if not param_value:  # Default is empty, set value in config
-                ctx_param_type = self._get_param_type(ctx, param_index)
+                ctx_param_type = ctx.command.params[param_index].type
                 ctx.params[param_name] = self._convert_to_type(config_params[param_name], ctx_param_type)
             # else overwrite config param
         super(CommandWithConfig, self).invoke(ctx)
-
-    def _get_param_type(self, ctx, param_index):
-        return ctx.command.params[param_index].type
 
     def _convert_to_type(self, config_param_value, ctx_param_type):
         if ctx_param_type.name == 'float':
@@ -41,6 +37,9 @@ class CommandWithConfig(Command):
         return param_type(config_param_value)
 
     def _parse_config(self):
+        """Supports parsing of yaml, json and txt
+        txt is not recommended as this format does not keep the types, preferred yaml or json
+        """
         _, config_file_extension = os.path.splitext(self.config_filepath)
         with open(self.config_filepath, 'r') as config:
             if config_file_extension == '.txt':
@@ -53,7 +52,7 @@ class CommandWithConfig(Command):
                     line = config.readline()
             elif config_file_extension == '.json':
                 config_params = json.load(config)
-            elif config_file_extension == '.yml':
+            elif config_file_extension == '.yml' or config_file_extension == '.yaml':
                 config_params = yaml.load(config)
             else:
                 raise ValueError("Config file extension is not recognized in click extra")
