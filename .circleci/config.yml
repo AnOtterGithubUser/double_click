@@ -1,11 +1,14 @@
 version: 2
 jobs:
-  build:
+  build-and-test:
     working_directory: ~/double_click
     docker:
       - image: circleci/python:3.7.7
     steps:
       - checkout
-      - run: ls -R
-      - run: sudo pip install -r requirements.txt
-      - run: python -m pytest
+      - run:
+          command: sudo pip install -r requirements.txt
+          name: Install
+      - run:
+          command: python -m pytest
+          name: Test
