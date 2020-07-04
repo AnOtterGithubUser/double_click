@@ -11,6 +11,11 @@ class CommandWithConfig(Command):
         self.config_filepath = config_filepath
 
     def invoke(self, ctx):
+        """Run the command with the parameters in the context
+
+        :param ctx: click.Context
+        :return:
+        """
         config_params = self._parse_config()
         for param_index, (param_name, param_value) in enumerate(ctx.params.items()):
             if not param_value:  # Default is empty, set value in config
@@ -20,6 +25,12 @@ class CommandWithConfig(Command):
         super(CommandWithConfig, self).invoke(ctx)
 
     def _convert_to_type(self, config_param_value, ctx_param_type):
+        """Convert the parameters in config file to click types
+
+        :param config_param_value: parameters parsed from config file
+        :param ctx_param_type: parameter type in context
+        :return:
+        """
         if ctx_param_type.name == 'float':
             param_type = float
         elif ctx_param_type.name == 'choice':

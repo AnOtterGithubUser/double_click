@@ -5,6 +5,20 @@ import inspect
 
 
 def _make_command_with_config(f, config_file_path, name, attrs):
+    """Turn a function into a double_click.CommandWithConfig
+
+    :param f:
+    Function to turn into command
+    :param config_file_path:
+    Path to the config file on host machine (yaml, json, or txt)
+    :param name:
+    Name of the command
+    :param attrs:
+    Additional attributes
+
+    :return:
+    double_click.CommandWithConfig
+    """
     if isinstance(f, Command):
         raise TypeError('Attempted to convert a callback into a '
                         'command twice.')
@@ -28,6 +42,20 @@ def _make_command_with_config(f, config_file_path, name, attrs):
 
 
 def command_with_config(config_file_path, name=None, **attrs):
+    """Decorator to turn a function into a double click command
+    A double click command holds the properties of a click command and
+    enables to use a config file
+
+    :param config_file_path: required
+    Path to the config file on host machine (yaml, json, or txt)
+    :param name: default None
+    Name of the double click command
+    :param attrs:
+    Additional attributes
+
+    :return:
+    Double click decorator
+    """
     def decorator(f):
         cmd = _make_command_with_config(f, config_file_path, name, attrs)
         cmd.__doc__ = f.__doc__
