@@ -6,9 +6,5 @@ jobs:
       - image: circleci/python:3.7.7
     steps:
       - checkout
-      - run:
-          command: sudo pip install -r requirements.txt
-          name: Install
-      - run:
-          command: python -m pytest
-          name: Test
+      - run: sudo pip install -r requirements.txt
+      - run: python -m pytest
