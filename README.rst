@@ -6,12 +6,12 @@ double_click
 .. image:: https://img.shields.io/pypi/v/double_click.svg
         :target: https://pypi.python.org/pypi/double_click
 
-.. image:: https://img.shields.io/travis/anottergithubuser/double_click.svg
-        :target: https://travis-ci.com/anottergithubuser/double_click
-
 .. image:: https://readthedocs.org/projects/double-click/badge/?version=latest
         :target: https://double-click.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
+
+.. image:: https://circleci.com/gh/AnOtterGithubUser/double_click.svg?style=shield
+        :target: https://circleci.com/gh/AnOtterGithubUser/double_click
 
 
 
