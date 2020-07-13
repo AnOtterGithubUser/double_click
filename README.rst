@@ -13,8 +13,8 @@ double_click
         :target: https://double-click.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-.. image:: https://circleci.com/gh/anottergithubuser/double-click.svg?style=svg
-        :target: https://circleci.com/gh/anottergithubuser/double-click
+.. image:: https://circleci.com/gh/AnOtterGithubUser/double_click.svg?style=shield
+        :target: https://circleci.com/gh/AnOtterGithubUser/double_click
 
 
 
