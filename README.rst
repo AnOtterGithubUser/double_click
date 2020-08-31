@@ -26,7 +26,10 @@ Extend click functionnalities by allowing parameters to be passed in a config fi
 Features
 --------
 
-* TODO
+* New 'command_with_config' decorator
+* Check types in config including click types (like Path)
+* Overwrite config values with default parameter in click.option
+* Seamless integration with click
 
 Credits
 -------
