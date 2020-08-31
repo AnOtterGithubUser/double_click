@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  run_pytest:
     working_directory: ~/double_click
     docker:
       - image: circleci/python:3.7.7
@@ -8,3 +8,8 @@ jobs:
       - checkout
       - run: sudo pip install -r requirements.txt
       - run: python -m pytest
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - run_pytest

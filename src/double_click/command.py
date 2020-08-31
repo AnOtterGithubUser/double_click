@@ -68,5 +68,5 @@ class CommandWithConfig(Command):
             elif config_file_extension == '.yml' or config_file_extension == '.yaml':
                 config_params = yaml.load(config, Loader=yaml.FullLoader)
             else:
-                raise ValueError("Config file extension is not recognized in click extra")
+                raise ValueError("Config file extension is not recognized in double click")
         return config_params
