@@ -1,1 +1,0 @@
-from double_click.decorators import command_with_config
