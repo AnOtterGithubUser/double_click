@@ -37,8 +37,10 @@ def _make_command_with_config(f, config_file_path, name, attrs):
         help = inspect.cleandoc(help)
     attrs['help'] = help
     _check_for_unicode_literals()
-    return CommandWithConfig(name=name or f.__name__.lower().replace('_', '-'), config_filepath=config_file_path,
-                             callback=f, params=params, **attrs)
+    return CommandWithConfig(name=name or f.__name__.lower().replace('_', '-'),
+                             config_filepath=config_file_path,
+                             callback=f,
+                             params=params, **attrs)
 
 
 def command_with_config(config_file_path, name=None, **attrs):
@@ -61,4 +63,3 @@ def command_with_config(config_file_path, name=None, **attrs):
         cmd.__doc__ = f.__doc__
         return cmd
     return decorator
-
