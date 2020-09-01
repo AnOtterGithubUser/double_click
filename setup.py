@@ -32,11 +32,13 @@ setup(
         'Programming Language :: Python :: 3.8',
     ],
     description="Extend click functionnalities by allowing parameters to be passed in a config file",
-    install_requires=requirements,
+    install_requires=[
+        'pyaml',
+        'click'
+    ],
     license="BSD license",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
-    keywords='click_click',
     name='clickclick',
     packages=find_packages(include=['clickclick', 'clickclick.*']),
     setup_requires=setup_requirements,
