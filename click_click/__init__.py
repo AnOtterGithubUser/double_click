@@ -1,1 +1,0 @@
-from click_click.click_click.decorators import command_with_config

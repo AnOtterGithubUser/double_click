@@ -4,7 +4,7 @@ from click.testing import CliRunner
 import os
 import click
 
-from click_click.click_click.decorators import command_with_config
+from clickclick.decorators import command_with_config
 
 
 def test_command_with_yaml_config_decorated_function(tmpdir):
