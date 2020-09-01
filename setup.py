@@ -10,7 +10,7 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = ['Click>=7.0', ]
+requirements = ['click>=7.0', 'pyaml']
 
 setup_requirements = ['pytest-runner', ]
 
@@ -32,15 +32,12 @@ setup(
         'Programming Language :: Python :: 3.8',
     ],
     description="Extend click functionnalities by allowing parameters to be passed in a config file",
-    install_requires=[
-        'pyaml',
-        'click'
-    ],
+    install_requires=requirements,
     license="BSD license",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
-    name='clickclick',
-    packages=find_packages(include=['clickclick', 'clickclick.*']),
+    name='dclick',
+    packages=find_packages(include=['dclick', 'dclick.*']),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
