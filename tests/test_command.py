@@ -2,7 +2,7 @@ import json
 import yaml
 import os
 
-from src.double_click.command import CommandWithConfig
+from src.dclick.command import CommandWithConfig
 
 
 def test__parse_config_should_return_a_dict_of_parameters_given_a_txt_file(tmpdir):
