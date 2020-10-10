@@ -6,6 +6,7 @@ jobs:
       - image: circleci/python:3.7.7
     steps:
       - checkout
+      - run: sudo pip install -r requirements.txt
       - run: tox
 workflows:
   version: 2
