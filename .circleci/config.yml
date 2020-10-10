@@ -9,7 +9,7 @@ jobs:
       - run: sudo apt update
       - run: sudo apt upgrade
       - run: sudo apt install python3.7
-      - run: sudo pip install -r requirements.txt
+      - run: sudo pip install tox
       - run: tox
 workflows:
   version: 2
