@@ -3,15 +3,12 @@ jobs:
   run_tests:
     working_directory: ~/double_click
     docker:
-      - image: circleci/python:3.7.7
+      - image: circleci/python:3.8.3
     steps:
       - checkout
       - run: sudo apt update
       - run: sudo apt upgrade
-      - run: sudo apt install python3.6
-      - run: sudo apt install software-properties-common
-      - run: sudo add-apt-repository ppa:deadsnakes/ppa
-      - run: sudo apt install python3.8
+      - run: sudo apt install python3.6 python3.7
       - run: sudo pip install -r requirements.txt
       - run: tox
 workflows:
