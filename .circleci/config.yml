@@ -6,6 +6,9 @@ jobs:
       - image: circleci/python:3.7.7
     steps:
       - checkout
+      - run: sudo apt update
+      - run: sudo apt upgrade
+      - run: sudo apt install python3.6 python3.8
       - run: sudo pip install -r requirements.txt
       - run: tox
 workflows:
