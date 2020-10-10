@@ -11,4 +11,4 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - run_pytest
+      - run_tests
