@@ -1,4 +1,4 @@
-"""Top-level package for double_click."""
+"""Top-level package for dclick."""
 
 __author__ = """Thomas PESNEAU"""
 __email__ = 'thomaspesneau@gmail.com'

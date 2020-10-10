@@ -50,9 +50,6 @@ clean-test: ## remove test and coverage artifacts
 lint: ## check style with flake8
 	flake8 double_click tests
 
-test: ## run tests quickly with the default Python
-	pytest
-
 test-all: ## run tests on every Python version with tox
 	tox
 
