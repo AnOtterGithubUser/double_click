@@ -8,7 +8,8 @@ jobs:
       - checkout
       - run: sudo apt update
       - run: sudo apt upgrade
-      - run: sudo apt install python3.6 python3.7
+      - run: sudo apt install python3.6
+      - run: sudo apt install python3.7
       - run: sudo pip install -r requirements.txt
       - run: tox
 workflows:
