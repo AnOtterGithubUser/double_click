@@ -33,7 +33,7 @@ With click you would have to pass a default value directly in the code
     from click import option
 
     @command()
-    @option('-n', '--n-epochs', default='Number of epochs to train the model')
+    @option('-n', '--n-epochs', type=int, default=5, help='Number of epochs to train the model')
     def train(n_epochs):
         run_training_for(n_epochs)
 
@@ -49,7 +49,7 @@ great. With `dclick` you just have to change one line:
     from click import option
 
     @command_with_config('path_to_config.json')
-    @option('-n', '--n-epochs')
+    @option('-n', '--n-epochs', type=int)
     def train(n_epochs):
         run_training_for(n_epochs):
 
