@@ -2,9 +2,10 @@ from .command import CommandWithConfig
 from click.core import Command
 from click.decorators import _check_for_unicode_literals
 import inspect
+from typing import Callable
 
 
-def _make_command_with_config(f, config_file_path, name, attrs):
+def _make_command_with_config(f: Callable, config_file_path: str, name: str, attrs) -> CommandWithConfig:
     """Turn a function into a double_click.CommandWithConfig
 
     :param f:
@@ -43,7 +44,7 @@ def _make_command_with_config(f, config_file_path, name, attrs):
                              params=params, **attrs)
 
 
-def command_with_config(config_file_path, name=None, **attrs):
+def command_with_config(config_file_path: str, name: str = None, **attrs) -> Callable:
     """Decorator to turn a function into a double click command
     A double click command holds the properties of a click command and
     enables to use a config file

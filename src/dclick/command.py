@@ -1,16 +1,16 @@
-from click.core import Command
+import click
 import os
 import json
 import yaml
 
 
-class CommandWithConfig(Command):
+class CommandWithConfig(click.Command):
 
-    def __init__(self, config_filepath='train_config.yml', *args, **kwargs):
+    def __init__(self, config_filepath: str = 'train_config.yml', *args, **kwargs):
         super(CommandWithConfig, self).__init__(*args, **kwargs)
         self.config_filepath = config_filepath
 
-    def invoke(self, ctx):
+    def invoke(self, ctx: click.Context):
         """Run the command with the parameters in the context
 
         :param ctx: click.Context
