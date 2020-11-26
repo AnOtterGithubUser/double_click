@@ -4,51 +4,57 @@
 
 from setuptools import setup, find_packages
 
-with open('README.rst') as readme_file:
+with open("README.rst") as readme_file:
     readme = readme_file.read()
 
-with open('HISTORY.rst') as history_file:
+with open("HISTORY.rst") as history_file:
     history = history_file.read()
 
-requirements = ['Click>=7.0', ]
+requirements = [
+    "Click>=7.0",
+]
 
-setup_requirements = ['pytest-runner', ]
+setup_requirements = [
+    "pytest-runner",
+]
 
-test_requirements = ['pytest>=3', ]
+test_requirements = [
+    "pytest>=3",
+]
 
 setup(
     author="Thomas PESNEAU",
-    author_email='thomaspesneau@gmail.com',
-    python_requires='>=3.5',
+    author_email="thomaspesneau@gmail.com",
+    python_requires=">=3.5",
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: BSD License',
-        'Natural Language :: English',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
+        "Development Status :: 2 - Pre-Alpha",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: BSD License",
+        "Natural Language :: English",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
     ],
     description="Extend click functionnalities by allowing parameters to be passed in a config file",
     entry_points={
-        'console_scripts': [
-            'double_click=double_click.cli:main',
+        "console_scripts": [
+            "double_click=double_click.cli:main",
         ],
     },
     install_requires=requirements,
     license="BSD license",
-    long_description=readme + '\n\n' + history,
+    long_description=readme + "\n\n" + history,
     include_package_data=True,
-    keywords='dclick',
-    name='dclick',
-    packages=find_packages('src'),
-    package_dir={'': 'src'},
+    keywords="dclick",
+    name="dclick",
+    packages=find_packages("src"),
+    package_dir={"": "src"},
     setup_requires=setup_requirements,
-    test_suite='tests',
+    test_suite="tests",
     tests_require=test_requirements,
-    url='https://github.com/anottergithubuser/double_click',
-    version='0.1.2',
+    url="https://github.com/anottergithubuser/double_click",
+    version="0.1.2",
     zip_safe=False,
 )
