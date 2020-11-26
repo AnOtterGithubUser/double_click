@@ -119,3 +119,22 @@ def test_command_with_non_existing_path(tmpdir):
     # Then
     assert result.exit_code == 1
     assert result.exception.args[0] == 'The path specified in config %s does not exist' % test_path
+
+
+def test_command_with_paramater_name_including_underscore(tmpdir):
+    # Given
+    config_filepath = os.path.join(tmpdir, 'test_config.yml')
+    content = {'n_epochs': 1}
+    with open(config_filepath, 'w') as config_file:
+        yaml.dump(content, config_file)
+
+    @command_with_config(config_filepath)
+    @click.option('--n-epochs', type=int)
+    def test_command_with_underscore(n_epochs):
+        click.echo('The value of n_epochs is %s' % n_epochs)
+    runner = CliRunner()
+    # When
+    result = runner.invoke(test_command_with_underscore)
+    # Then
+    assert result.exit_code == 0
+    assert result.output == 'The value of n_epochs is 1\n'
