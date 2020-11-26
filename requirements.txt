@@ -8,3 +8,4 @@ pytest
 pytest-runner
 pyaml
 click
+black

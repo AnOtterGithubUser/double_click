@@ -5,7 +5,9 @@ import inspect
 from typing import Callable
 
 
-def _make_command_with_config(f: Callable, config_file_path: str, name: str, attrs) -> CommandWithConfig:
+def _make_command_with_config(
+    f: Callable, config_file_path: str, name: str, attrs
+) -> CommandWithConfig:
     """Turn a function into a double_click.CommandWithConfig
 
     :param f:
@@ -21,27 +23,29 @@ def _make_command_with_config(f: Callable, config_file_path: str, name: str, att
     double_click.CommandWithConfig
     """
     if isinstance(f, Command):
-        raise TypeError('Attempted to convert a callback into a '
-                        'command twice.')
+        raise TypeError("Attempted to convert a callback into a " "command twice.")
     try:
         params = f.__click_params__
         params.reverse()
         del f.__click_params__
     except AttributeError:
         params = []
-    help = attrs.get('help')
+    help = attrs.get("help")
     if help is None:
         help = inspect.getdoc(f)
         if isinstance(help, bytes):
-            help = help.decode('utf-8')
+            help = help.decode("utf-8")
     else:
         help = inspect.cleandoc(help)
-    attrs['help'] = help
+    attrs["help"] = help
     _check_for_unicode_literals()
-    return CommandWithConfig(name=name or f.__name__.lower().replace('_', '-'),
-                             config_filepath=config_file_path,
-                             callback=f,
-                             params=params, **attrs)
+    return CommandWithConfig(
+        name=name or f.__name__.lower().replace("_", "-"),
+        config_filepath=config_file_path,
+        callback=f,
+        params=params,
+        **attrs
+    )
 
 
 def command_with_config(config_file_path: str, name: str = None, **attrs) -> Callable:
@@ -59,8 +63,10 @@ def command_with_config(config_file_path: str, name: str = None, **attrs) -> Cal
     :return:
     Double click decorator
     """
+
     def decorator(f):
         cmd = _make_command_with_config(f, config_file_path, name, attrs)
         cmd.__doc__ = f.__doc__
         return cmd
+
     return decorator
