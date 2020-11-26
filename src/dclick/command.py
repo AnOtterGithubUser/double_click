@@ -2,9 +2,13 @@ import click
 import os
 import json
 import yaml
+import warnings
 
 
 class CommandWithConfig(click.Command):
+
+    SPECIAL_CHARACTERS = ["!", "?", ".", "-", ":", "/"]
+
     def __init__(self, config_filepath: str = "train_config.yml", *args, **kwargs):
         super(CommandWithConfig, self).__init__(*args, **kwargs)
         self.config_filepath = config_filepath
@@ -16,6 +20,7 @@ class CommandWithConfig(click.Command):
         :return:
         """
         config_params = self._parse_config()
+        self.check_config_params(config_params)
         for param_index, (param_name, param_value) in enumerate(ctx.params.items()):
             if not param_value:  # Default is empty, set value in config
                 ctx_param_type = ctx.command.params[param_index].type
@@ -78,3 +83,19 @@ class CommandWithConfig(click.Command):
                     "Config file extension is not recognized in double click"
                 )
         return config_params
+
+    def check_characters_in_param_name(self, param_name):
+        special_characters_in_param_name = [
+            char for char in self.SPECIAL_CHARACTERS if char in param_name
+        ]
+        if special_characters_in_param_name:
+            warnings.warn(
+                "The parameter name %s in %s contains the following special characters %s,\
+this might be an issue\n\
+Note: '-' in click are converted to '_'"
+                % (param_name, self.config_filepath, special_characters_in_param_name)
+            )
+
+    def check_config_params(self, config_params):
+        for param_name in config_params:
+            self.check_characters_in_param_name(param_name)
