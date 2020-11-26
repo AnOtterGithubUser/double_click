@@ -23,7 +23,7 @@ def _make_command_with_config(
     double_click.CommandWithConfig
     """
     if isinstance(f, Command):
-        raise TypeError("Attempted to convert a callback into a " "command twice.")
+        raise TypeError("Attempted to convert a callback into a command twice.")
     try:
         params = f.__click_params__
         params.reverse()
