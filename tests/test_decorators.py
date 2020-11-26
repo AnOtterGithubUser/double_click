@@ -7,7 +7,7 @@ import click
 from dclick import command_with_config
 
 
-def test_command_with_yaml_config_decorated_function(tmpdir):
+def test_command_with_yaml_config_decorated_function_should_work(tmpdir):
     # Given
     content = {"a": 1, "b": True, "c": "that", "d": 1.5}
     config_filepath = os.path.join(tmpdir, "test_config.yml")
@@ -28,7 +28,7 @@ def test_command_with_yaml_config_decorated_function(tmpdir):
     assert result.output == "The value of a is 1.0\nThe value of c is that\n"
 
 
-def test_command_with_json_config_decorated_function(tmpdir):
+def test_command_with_json_config_decorated_function_should_work(tmpdir):
     # Given
     content = {"a": 1, "b": True, "c": "that", "d": 1.5}
     config_filepath = os.path.join(tmpdir, "test_config.json")
@@ -48,7 +48,7 @@ def test_command_with_json_config_decorated_function(tmpdir):
     assert result.output == "The value of a is 1.0\n"
 
 
-def test_command_with_txt_config_decorated_function(tmpdir):
+def test_command_with_txt_config_decorated_function_should_work(tmpdir):
     # Given
     content = {"a": 1, "b": True, "c": "that", "d": 1.5}
     config_filepath = os.path.join(tmpdir, "test_config.txt")
@@ -69,7 +69,7 @@ def test_command_with_txt_config_decorated_function(tmpdir):
     assert result.output == "The value of a is 1.0\n"
 
 
-def test_command_with_integer_type(tmpdir):
+def test_command_with_integer_type_should_work(tmpdir):
     # Given
     content = {"i": 5}
     config_filepath = os.path.join(tmpdir, "test_config.yml")
@@ -89,7 +89,7 @@ def test_command_with_integer_type(tmpdir):
     assert result.output == "The value of the integer is 5\n"
 
 
-def test_command_with_existing_path(tmpdir):
+def test_command_with_existing_path_should_work(tmpdir):
     # Given
     config_filepath = os.path.join(tmpdir, "test_config.yml")
     test_path = os.path.join(tmpdir, "test_path.txt")
@@ -112,7 +112,7 @@ def test_command_with_existing_path(tmpdir):
     assert result.output == "The value of the path is %s/test_path.txt\n" % tmpdir
 
 
-def test_command_with_non_existing_path(tmpdir):
+def test_command_with_non_existing_path_should_fail(tmpdir):
     # Given
     config_filepath = os.path.join(tmpdir, "test_config.yml")
     test_path = os.path.join(tmpdir, "test_path.txt")
@@ -154,3 +154,22 @@ def test_command_with_paramater_name_including_underscore(tmpdir):
     # Then
     assert result.exit_code == 0
     assert result.output == "The value of n_epochs is 1\n"
+
+
+def test_command_with_shortcut_name_should_work(tmpdir):
+    # Given
+    config_filepath = os.path.join(tmpdir, 'test_config.yml')
+    content = {"parameter": "OK"}
+    with open(config_filepath, "w") as config_file:
+        yaml.dump(content, config_file)
+    @command_with_config(config_filepath)
+    @click.option('-p', '--parameter')
+    def test_command_shortcut(parameter):
+        click.echo('The value of parameter is %s' % parameter)
+    runner = CliRunner()
+    expected_output = "The value of parameter is OK\n"
+    # When
+    result = runner.invoke(test_command_shortcut)
+    # Then
+    assert result.exit_code == 0
+    assert result.output == expected_output
