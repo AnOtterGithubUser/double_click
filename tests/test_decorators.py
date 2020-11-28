@@ -139,7 +139,7 @@ def test_command_with_non_existing_path_should_fail(tmpdir):
 def test_command_with_paramater_name_including_underscore(tmpdir):
     # Given
     config_filepath = os.path.join(tmpdir, "test_config.yml")
-    content = {"n_epochs": 1}
+    content = {"n-epochs": 1}
     with open(config_filepath, "w") as config_file:
         yaml.dump(content, config_file)
 
