@@ -177,7 +177,7 @@ def test_command_with_shortcut_name_should_work(tmpdir):
     assert result.output == expected_output
 
 
-def test_command_with_parameters_given_in_cli_overwrites_config_values(tmpdir):
+def test_command_with_parameters_given_in_cli_should_overwrite_config_values(tmpdir):
     # Given
     config_filepath = os.path.join(tmpdir, "test_config.yml")
     content = {"a": "value", "b": "0"}
@@ -194,6 +194,23 @@ def test_command_with_parameters_given_in_cli_overwrites_config_values(tmpdir):
     expected_output = "The value of parameter a is changed_val and b is 2\n"
     # When
     result = runner.invoke(test_command, ["--a", "changed_val", "--b", "2"])
+    # Then
+    assert result.exit_code == 0
+    assert result.output == expected_output
+
+
+def test_command_without_config_file_should_work():
+    # Given
+    @command_with_config()
+    @click.option("--a")
+    @click.option("--b")
+    def test_command(a, b):
+        click.echo("The value of a is %s, the value of b is %s" % (a, b))
+
+    runner = CliRunner()
+    expected_output = "The value of a is 1, the value of b is 2\n"
+    # When
+    result = runner.invoke(test_command, ["--a", "1", "--b", "2"])
     # Then
     assert result.exit_code == 0
     assert result.output == expected_output
