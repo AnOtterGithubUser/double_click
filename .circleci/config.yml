@@ -11,8 +11,22 @@ jobs:
       - run: sudo apt install python3.7
       - run: sudo pip install tox
       - run: tox
+  build-deploy:
+    working_directory: ~/double_click
+    docker:
+      - image: circleci/python:3.8.3
+    steps:
+      - checkout
+      - run: rm -fr dist/
+      - run: python setup.py sdist
+      - run: pip install twine
+      - run: twine upload dist/*
 workflows:
   version: 2
   build_and_test:
     jobs:
       - run_tests
+      - build-deploy:
+          filters:
+            branches:
+              only: master
