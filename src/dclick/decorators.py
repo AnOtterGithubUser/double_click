@@ -48,7 +48,9 @@ def _make_command_with_config(
     )
 
 
-def command_with_config(config_file_path: str, name: str = None, **attrs) -> Callable:
+def command_with_config(
+    config_file_path: str = None, name: str = None, **attrs
+) -> Callable:
     """Decorator to turn a function into a double click command
     A double click command holds the properties of a click command and
     enables to use a config file

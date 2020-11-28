@@ -7,7 +7,7 @@ import warnings
 
 class CommandWithConfig(click.Command):
 
-    SPECIAL_CHARACTERS = ["!", "?", ".", "-", ":", "/"]
+    SPECIAL_CHARACTERS = ["!", "?", ".", ":", "/"]
 
     def __init__(self, config_filepath: str = "train_config.yml", *args, **kwargs):
         super(CommandWithConfig, self).__init__(*args, **kwargs)
@@ -19,15 +19,17 @@ class CommandWithConfig(click.Command):
         :param ctx: click.Context
         :return:
         """
-        config_params = self._parse_config()
-        self.check_config_params(config_params)
-        for param_index, (param_name, param_value) in enumerate(ctx.params.items()):
-            if not param_value:  # Default is empty, set value in config
-                ctx_param_type = ctx.command.params[param_index].type
-                ctx.params[param_name] = self._convert_to_type(
-                    config_params[param_name], ctx_param_type
-                )
-            # else overwrite config param
+        if self.config_filepath:
+            config_params = self._parse_config()
+            config_params = self.convert_underscores(config_params)
+            self.check_config_params(config_params)
+            for param_index, (param_name, param_value) in enumerate(ctx.params.items()):
+                if not param_value:  # Default is empty, set value in config
+                    ctx_param_type = ctx.command.params[param_index].type
+                    ctx.params[param_name] = self._convert_to_type(
+                        config_params[param_name], ctx_param_type
+                    )
+                # else overwrite config param with cli provided value
         super(CommandWithConfig, self).invoke(ctx)
 
     def _convert_to_type(self, config_param_value, ctx_param_type):
@@ -92,10 +94,13 @@ class CommandWithConfig(click.Command):
             warnings.warn(
                 "The parameter name %s in %s contains the following special characters %s,\
 this might be an issue\n\
-Note: '-' in click are converted to '_'"
+Note: '-' are converted to '_'"
                 % (param_name, self.config_filepath, special_characters_in_param_name)
             )
 
     def check_config_params(self, config_params):
         for param_name in config_params:
             self.check_characters_in_param_name(param_name)
+
+    def convert_underscores(self, config_params):
+        return {key.replace("-", "_"): value for key, value in config_params.items()}
