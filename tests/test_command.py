@@ -49,7 +49,9 @@ def test__parse_config_should_return_a_dict_of_parameters_given_a_json_file(tmpd
     assert expected_config_parameters == actual_config_parameters
 
 
-def test_check_config_params_should_raise_a_warning_when_given_special_characters(tmpdir):
+def test_check_config_params_should_raise_a_warning_when_given_special_characters(
+    tmpdir,
+):
     # Given
     content = {"n-epochs": 1}
     config_filepath = os.path.join(tmpdir, "test_config.yml")

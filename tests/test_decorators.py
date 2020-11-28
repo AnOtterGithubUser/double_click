@@ -158,18 +158,42 @@ def test_command_with_paramater_name_including_underscore(tmpdir):
 
 def test_command_with_shortcut_name_should_work(tmpdir):
     # Given
-    config_filepath = os.path.join(tmpdir, 'test_config.yml')
+    config_filepath = os.path.join(tmpdir, "test_config.yml")
     content = {"parameter": "OK"}
     with open(config_filepath, "w") as config_file:
         yaml.dump(content, config_file)
+
     @command_with_config(config_filepath)
-    @click.option('-p', '--parameter')
+    @click.option("-p", "--parameter")
     def test_command_shortcut(parameter):
-        click.echo('The value of parameter is %s' % parameter)
+        click.echo("The value of parameter is %s" % parameter)
+
     runner = CliRunner()
     expected_output = "The value of parameter is OK\n"
     # When
     result = runner.invoke(test_command_shortcut)
+    # Then
+    assert result.exit_code == 0
+    assert result.output == expected_output
+
+
+def test_command_with_parameters_given_in_cli_overwrites_config_values(tmpdir):
+    # Given
+    config_filepath = os.path.join(tmpdir, "test_config.yml")
+    content = {"a": "value", "b": "0"}
+    with open(config_filepath, "w") as config_file:
+        yaml.dump(content, config_file)
+
+    @command_with_config(config_filepath)
+    @click.option("--a")
+    @click.option("--b")
+    def test_command(a, b):
+        click.echo("The value of parameter a is %s and b is %s" % (a, b))
+
+    runner = CliRunner()
+    expected_output = "The value of parameter a is changed_val and b is 2\n"
+    # When
+    result = runner.invoke(test_command, ["--a", "changed_val", "--b", "2"])
     # Then
     assert result.exit_code == 0
     assert result.output == expected_output
