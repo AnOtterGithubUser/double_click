@@ -19,14 +19,16 @@ jobs:
       - checkout
       - run: rm -fr dist/
       - run: python setup.py sdist
+      - run: python setup.py bdist_wheel
       - run: pip install twine
-      - run: twine upload dist/*
+      - run: twine upload --username $USERNAME --password $PASSWORD dist/*
 workflows:
   version: 2
   build_and_test:
     jobs:
       - run-tests
       - build-deploy:
+          context: pypi
           requires:
             - run-tests
           filters:
