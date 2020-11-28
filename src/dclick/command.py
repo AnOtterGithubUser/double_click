@@ -19,15 +19,16 @@ class CommandWithConfig(click.Command):
         :param ctx: click.Context
         :return:
         """
-        config_params = self._parse_config()
-        self.check_config_params(config_params)
-        for param_index, (param_name, param_value) in enumerate(ctx.params.items()):
-            if not param_value:  # Default is empty, set value in config
-                ctx_param_type = ctx.command.params[param_index].type
-                ctx.params[param_name] = self._convert_to_type(
-                    config_params[param_name], ctx_param_type
-                )
-            # else overwrite config param
+        if self.config_filepath:
+            config_params = self._parse_config()
+            self.check_config_params(config_params)
+            for param_index, (param_name, param_value) in enumerate(ctx.params.items()):
+                if not param_value:  # Default is empty, set value in config
+                    ctx_param_type = ctx.command.params[param_index].type
+                    ctx.params[param_name] = self._convert_to_type(
+                        config_params[param_name], ctx_param_type
+                    )
+                # else overwrite config param with cli provided value
         super(CommandWithConfig, self).invoke(ctx)
 
     def _convert_to_type(self, config_param_value, ctx_param_type):
