@@ -51,13 +51,19 @@ With `dclick` you just have to change one line:
     from dclick import command_with_config
     from click import option
 
-    @command_with_config('path_to_config.json')
+    @command_with_config('path_to_config.yml')
     @option('-n', '--n-epochs', type=int)
     def train(n_epochs):
         run_training_for(n_epochs):
 
     if __name__ == '__main__':
         train()
+
+`path_to_config.yml`
+
+.. code-block:: yaml
+
+    n-epochs: 5
 
 Just be careful that the name in the config matches the name of the option. `dclick` takes care of the rest.
 You can pass a config as json, yaml or txt. Json and yaml are preferred.
