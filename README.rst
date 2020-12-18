@@ -9,7 +9,8 @@ Dclick
 .. image:: https://circleci.com/gh/AnOtterGithubUser/double_click.svg?style=shield
         :target: https://circleci.com/gh/AnOtterGithubUser/double_click
 
-
+.. image:: https://img.shields.io/badge/python-3.7|3.8-blue.svg
+        :target: https://www.python.org/downloads/
 
 
 Extend click functionnalities by allowing parameters to be passed in a config file.
