@@ -51,7 +51,7 @@ With `dclick` you just have to change one line:
     from dclick import command_with_config
     from click import option
 
-    @command_with_config('path_to_config.yml')
+    @command_with_config(<path_to_config.yml>)
     @option('-n', '--n-epochs', type=int)
     def train(n_epochs):
         run_training_for(n_epochs):
